@@ -4,17 +4,15 @@ defmodule Coup.Card.Assassin do
   @card_name "Assassin"
   @action_name "Assassinate"
   @action_description "Pay 3 coins, choose player to lose a card"
-  @counteracted_card nil
+  @counteracts_card nil
   @counteraction_description "None"
 
   use Coup.Card.BaseCard
 
-  def validate_action(%Player{isk_count: isk_count}) when isk_count >= 3, do: {:ok}
-  def validate_action(%Player{}), do: {:error, "Not enough isk to assassinate!"}
+  def validate_action(%Player{coin_count: coin_count}) when coin_count >= 3, do: {:ok}
+  def validate_action(%Player{}), do: {:error, "Not enough coins to assassinate!"}
 
-  def preact(acting_player), do: charge_3_isk(acting_player)
+  def preact(acting_player), do: lose_coins(acting_player, 3)
 
-  def act(_), do: :noop
-
-  defp charge_3_isk(%Player{isk_count: isk_count} = player), do: %Player{player | isk_count: isk_count - 3}
+  def act(_, _), do: :noop
 end
