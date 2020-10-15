@@ -15,7 +15,7 @@ defmodule Coup.Game do
   ]
 
   def start_game(players) do
-    setup_game(players) |> Turn.take_turn
+    setup_game(players) |> Turn.start_turn
   end
 
   defp setup_game(players) do

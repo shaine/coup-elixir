@@ -20,12 +20,12 @@ defmodule Coup.Turn do
     target_cards: []
   ]
 
-  def take_turn(%Game{players: players}) do
-
+  def start_turn(game) do
+    start_turn(game, 0)
   end
 
-  def take_turn(%Player{} = player, %Game{deck: deck} = game) do
-    player
+  def start_turn(%Game{deck: deck, players: players} = game, player_index) do
+    Enum.at(players, player_index)
     |> start_turn
     |> select_card_action
     |> validate_action
@@ -41,7 +41,7 @@ defmodule Coup.Turn do
     |> next_turn(game)
   end
 
-  defp start_turn(player) do
+  defp new_turn(player) do
     %Turn{
       player: player
     }
